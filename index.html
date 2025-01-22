@@ -1,0 +1,102 @@
+<style>
+
+    input {
+        border-color: rgb(41, 41, 41);
+        border-radius: 7px;
+        width: 60%;
+    }
+
+    h1 {
+        width: 100%;
+        
+    }
+
+    div {
+        height: 90%;
+        width: 100%;
+    }
+
+    input {
+        height: 10%;
+        width: 100%;
+    }
+    
+    #responce_div {
+        
+        width: 60%;
+        margin-right: 40%;
+    }
+
+    #responce {
+        border: solid;
+        border-width: 2px;
+        border-color: rgb(41, 41, 41);
+        border-radius: 10px;
+        width: 60%;
+        align-content: Left;
+    }
+
+    #inputs_div {
+        width: 60%;
+        margin-left: 40%;
+    }
+
+    #inputs {
+        border: solid;
+        border-width: 2px;
+        border-color: rgb(41, 41, 41);
+        border-radius: 10px;
+        width: 60%;
+    }
+
+</style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Pilot</title>
+<script>
+    const vscode = acquireVsCodeApi();
+    function send(msg) {
+        if(event.key === 'Enter') {
+            var i = document.createElement("h1");
+            var chatArea = document.getElementById("chat_area");
+            var d_i = document.createElement("div");
+            d_i.id = "inputs_div";
+            i.id = "inputs"
+            i.textContent = msg.value;
+            d_i.appendChild(i);
+            chatArea.appendChild(d_i);
+
+            vscode.postMessage({
+                command: 'send',
+                text: msg.value
+            });
+        }
+    }
+
+    window.addEventListener('message', event =>{
+        const message = event.data;
+        switch (message.command) {
+            case 'responce':
+                var r = document.createElement("h1");
+                var chatArea = document.getElementById("chat_area");
+                var d_r = document.createElement("div");
+                d_r.id = "responce_div";
+                r.id = "responce"
+                r.textContent = message.text;
+                d_r.appendChild(r);
+                chatArea.appendChild(d_r);
+                break;
+        }
+    })
+
+</script>
+</head>
+<body>
+<div id="chat_area" >
+    <div id="responce"> <h1>hi</h1> </div>
+</div>
+
+<input type="text" placeholder="some text" class="send" onkeydown="send(this)"/>
+</body>
+</html>`
